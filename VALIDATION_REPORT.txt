@@ -1,0 +1,22 @@
+Junba AI Transcriber v2.9 驗證報告
+=================================
+日期：2026-09-30
+
+目前環境完成：
+- Python compileall：PASS
+- pytest：21 passed
+- NPU Level Zero invalid-argument 錯誤辨識：PASS
+- NPU 相容模式失敗 → Intel GPU 自動備援：PASS（模擬測試）
+- NPU + Intel GPU 都失敗 → OpenVINO CPU 自動備援：PASS（模擬測試）
+- 原有音檔、Gemini、繁體中文、停止輸出、OpenVINO ABI/封裝測試保留
+
+Windows GitHub Actions 將繼續驗證：
+- OpenVINO / openvino-tokenizers / openvino-genai ABI 版本
+- OpenVINO Tokenizers DLL 實際載入
+- Portable EXE self-test / UI offscreen test
+- Single EXE self-test / UI offscreen test
+
+重要限制：
+GitHub hosted runner 沒有使用者的 Intel AI Boost NPU，因此無法在 CI 實際跑 NPU Whisper。
+v2.9 的策略不是宣稱所有 NPU driver/runtime 組合都能成功，而是：
+NPU 先嘗試；遇到已知 Level Zero 執行期失敗時自動重試相容模式，仍失敗便無縫改用 Intel GPU/CPU，使工作可以完成。
